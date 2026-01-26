@@ -1,0 +1,13 @@
+{
+  "name": "my_cinema",
+  "version": "WIP",
+  "description": "Ce projet consiste en la conception et le développement d'une application web de gestion (Back-Office) destinée à un gérant de cinéma. L'objectif est d'offrir une interface centralisée, robuste et sécurisée pour piloter l'activité quotidienne de l'établissement.",
+  "main": "index.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Baussart Renaud",
+  "license": "",
+  "packageManager": "pnpm@10.28.0"
+}
