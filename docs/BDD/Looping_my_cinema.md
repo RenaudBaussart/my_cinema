@@ -1,11 +1,12 @@
+```sql
 CREATE TABLE rooms(
    id INT AUTO_INCREMENT,
    name VARCHAR(100) NOT NULL,
    capacity INT NOT NULL,
    type VARCHAR(100),
-   active TINYINT(1) NOT NULL,
-   created_at DATETIME,
-   updated_at DATETIME,
+   active TINYINT(1) NOT NULL DEFAULT 1,
+   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
    PRIMARY KEY(id)
 );
 
@@ -17,15 +18,15 @@ CREATE TABLE movies(
    release_year INT NOT NULL,
    genre VARCHAR(100),
    director VARCHAR(100),
-   create_at DATETIME,
-   updated_at DATETIME,
+   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
    PRIMARY KEY(id)
 );
 
 CREATE TABLE screenings(
    id INT AUTO_INCREMENT,
    start_time DATETIME NOT NULL,
-   created_at DATETIME,
+   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
    room_id INT NOT NULL,
    movie_id INT NOT NULL,
    PRIMARY KEY(id),
@@ -46,3 +47,4 @@ INSERT INTO movies (title, description, duration, release_year, genre, director)
 INSERT INTO screenings (movie_id, room_id, start_time) VALUES 
 (1, 1, '2026-02-01 20:30:00'),
 (2, 2, '2026-02-01 14:00:00');
+```
