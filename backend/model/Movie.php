@@ -7,6 +7,7 @@ class Movie {
     public $release_year ;
     public $genre ;
     public $director ;
+    public $is_deleted;
     public $creation_at;
     public $modified_at;
 }
