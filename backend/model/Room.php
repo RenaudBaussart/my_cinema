@@ -7,7 +7,5 @@ class Room{
     public $active;
     public $created_at;
     public $updated_at;
-
-
 }
 ?>
