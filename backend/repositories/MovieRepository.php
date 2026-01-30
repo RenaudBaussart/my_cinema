@@ -15,10 +15,10 @@ class MovieRepository
     }
     #region CRUD methods
     #region Create
-    public function add(Movie $movie)
+    public function add(Movie $movie): void
     {
-        $statemant = $this->pdo->prepare(query: "INSERT INTO movies (title, description, duration, release_year, genre, director) VALUES (?, ?, ?, ?, ?, ?)");
-        $statemant->execute(params: [
+        $statement = $this->pdo->prepare(query: "INSERT INTO movies (title, description, duration, release_year, genre, director) VALUES (?, ?, ?, ?, ?, ?)");
+        $statement->execute(params: [
             $movie->title,
             $movie->description,
             $movie->duration,
@@ -31,18 +31,18 @@ class MovieRepository
     #region Read
     public function getAll(): array
     {
-        $statemant = $this->pdo->query(query: "SELECT * FROM movies");
-        return $statemant->fetchAll(mode: PDO::FETCH_CLASS, column: "Movie");
+        $statement = $this->pdo->query(query: "SELECT * FROM movies");
+        return $statement->fetchAll(mode: PDO::FETCH_CLASS, column: "Movie");
     }
     public function getAllUndeleted(): array
     {
-        $statemant = $this->pdo->query(query: "SELECT * FROM movies WHERE is_deleted = 0");
-        return $statemant->fetchAll(mode: PDO::FETCH_CLASS, column: "Movie");
+        $statement = $this->pdo->query(query: "SELECT * FROM movies WHERE is_deleted = 0");
+        return $statement->fetchAll(mode: PDO::FETCH_CLASS, column: "Movie");
     }
     public function getAllDeleted(): array
     {
-        $statemant = $this->pdo->query(query: "SELECT * FROM movies WHERE is_deleted = 1");
-        return $statemant->fetchAll(mode: PDO::FETCH_CLASS, column: "Movie");
+        $statement = $this->pdo->query(query: "SELECT * FROM movies WHERE is_deleted = 1");
+        return $statement->fetchAll(mode: PDO::FETCH_CLASS, column: "Movie");
     }
     public function getById(int $id): ?Movie {
         $statement = $this->pdo->prepare("SELECT * FROM movies WHERE id = ?");
