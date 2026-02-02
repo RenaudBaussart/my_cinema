@@ -24,7 +24,8 @@ class RoomRepository {
     #region Read
     public function getAll(): array {
         $statement = $this->pdo->query(query: "SELECT * FROM rooms");
-        return $statement->fetchall(mode: PDO::FETCH_CLASS, column:'Room');
+        $statement->setFetchMode(PDO::FETCH_CLASS, 'Room');
+        return $statement->fetchAll();
     }
     public function getById(int $id): Room {
         $statement = $this->pdo->prepare(query: "SELECT * FROM rooms WHERE id = ?");
@@ -34,11 +35,13 @@ class RoomRepository {
     }
     public function getAllActive(): array {
         $statement = $this->pdo->query(query: "SELECT * FROM rooms WHERE active = 1");
-        return $statement->fetchall(mode: PDO::FETCH_CLASS, column:'Room');
+        $statement->setFetchMode(PDO::FETCH_CLASS, 'Room');
+        return $statement->fetchAll();
     }
     public function getAllInactive(): array {
         $statement = $this->pdo->query(query: "SELECT * FROM rooms WHERE active = 0");
-        return $statement->fetchall(mode: PDO::FETCH_CLASS, column:'Room');
+        $statement->setFetchMode(PDO::FETCH_CLASS, 'Room');
+        return $statement->fetchAll();
     }
     #endregion
     #region Update

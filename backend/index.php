@@ -95,6 +95,36 @@ case 'delete_room':
         $screening->movie_id = (int)($_POST['movie_id'] ?? 0);
         $screeningController->addScreening(screening: $screening);
         break;
+    case "list_screening":
+        $screeningController->list();
+        break;
+    case "update_screening":
+        $id = $_GET["id"] ?? null;
+        if($id){
+            $screeningUpdate = new Screening();
+            $screeningUpdate->start_time = $_POST['start_time'] ?? '';
+            $screeningUpdate->room_id = (int)($_POST['room_id'] ?? 0);
+            $screeningUpdate->movie_id = (int)($_POST['movie_id'] ?? 0);
+            $screeningUpdate->id = (int)$id;
+            $screeningController->updateScreening(screening: $screeningUpdate);
+        }
+        else{
+            echo json_encode(value: new response(responseType: "error", responseMessage: "ID maquant"));
+        }
+        break;
+    case "delete_screening":
+        $id = $_GET['id'] ?? null;
+        if($id){
+            $screening = new Screening();
+            $screening->id = $id;
+            $screeningController->deleteScreening(screening: $screening);
+        }
+        else{
+            echo json_encode(value: new response(responseType: "error", responseMessage: "ID maquant"));
+        }
+        break;
+    
+
 default:
     echo json_encode(value: ["error" => "Action not found"]);
     break;
