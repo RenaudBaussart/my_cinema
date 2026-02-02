@@ -19,7 +19,7 @@ class MovieController {
     #endregion
     #region Read
     public function list (): void { // Méthode appelée par le fichier index . php
-        $movies = $this->repository->getAll();
+        $movies = $this->repository->getAllUndeleted();
         $response = new Response(responseType: "success", responseMessage: $movies);
         echo json_encode(value: $response);
     }

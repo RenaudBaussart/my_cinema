@@ -4,6 +4,10 @@ require_once __DIR__ .'/controllers/RoomController.php';
 require_once __DIR__ .'/controllers/ScreeningController.php';
 require_once __DIR__ . '/model/Movie.php';
 require_once __DIR__ . '/model/Room.php';
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PATCH, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
 $request = $_GET ['action'] ?? ''; // Récupération du paramètre d'URL action indiquant la route API
 $movieController = new MovieController();
 $roomController = new RoomController();
