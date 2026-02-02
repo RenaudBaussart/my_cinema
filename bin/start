@@ -1,4 +1,4 @@
 #!/bin/bash
-#start "http://localhost:8000/index.html"
+#start "http://localhost:8000/frontend/index.html"
 cd backend
 php -S localhost:8000
