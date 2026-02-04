@@ -24,8 +24,8 @@ class ScreeningRepository {
     #endregion
     #region Read
     public function getAll(): array {
-        $statement = $this->pdo->query(query: "SELECT * FROM screenings");
-        return $statement->fetchall(mode: PDO::FETCH_CLASS, column:'Screening');
+        $statement = $this->pdo->query(query: "SELECT s.*, m.title as movie_title, r.name as room_name FROM screenings s JOIN movies m ON s.movie_id = m.id JOIN rooms r ON s.room_id = r.id WHERE s.is_deleted = 0");
+        return $statement->fetchall(mode: PDO::FETCH_ASSOC);
     }
     public function getById(int $id): Screening {
         $statement = $this->pdo->prepare(query: "SELECT * FROM screenings WHERE id = ?");

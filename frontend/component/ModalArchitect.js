@@ -1,5 +1,6 @@
 import { Movie } from "../class/movie.js";
 import { Room } from "../class/Room.js";
+import { Screening } from "../class/Screening.js";
 export class ModalArchitect {
     static instance = null;
     isOpen = false;
@@ -121,6 +122,46 @@ export class ModalArchitect {
         }
     }
 
+    modifyScreening(screening){
+        if(typeof(screening) === "object" && screening instanceof Screening) {
+            this.modalBase.innerHTML = "";
+            this.modalBase.innerHTML = `
+        <form class="screening_form" id="modify_screening_form">
+            <input type="hidden" name="id" value="${screening.id}">
+            <div class="input_field" id="screening_movie_id_input_field">
+                <label>ID Film :</label>
+                <input type="number" name="movie_id" placeholder="1" value="${screening.movie_id}" required>
+            </div>
+
+            <div class="input_field" id="screening_room_id_input_field">
+                <label>ID Salle :</label>
+                <input type="number" name="room_id" placeholder="1" value="${screening.room_id}" required>
+            </div>
+
+            <div class="input_field" id="screening_start_time_input_field">
+                <label>Heure de début :</label>
+                <input type="datetime-local" name="start_time" value="${screening.start_time}" required>
+            </div>
+
+            <button type="submit">Enregistrer</button>
+            <button type="button" id="cancel_modify_screening">Annuler</button>
+        </form>`;
+            if (!document.body.contains(this.modalBase)) {
+                document.body.appendChild(this.modalBase);
+            }
+            this.modalBase.style.display = "flex";
+
+            document.getElementById("cancel_modify_screening").addEventListener("click", ModalArchitect.closeModify);
+
+            const form = document.getElementById("modify_screening_form");
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                await Screening.updateScreening(event.target);
+            });
+            this.isOpen = true;
+        }
+    }
+
     createMovie(){
         this.modalBase.innerHTML = "";
         this.modalBase.innerHTML = `
@@ -217,6 +258,43 @@ export class ModalArchitect {
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
                 await Room.addRoom(event.target);
+            });
+            instance.isOpen = true;
+    }
+
+    static createScreening(){
+        const instance = new ModalArchitect();
+        instance.modalBase.innerHTML = "";
+        instance.modalBase.innerHTML = `
+        <form class="screening_form" id="add_screening_form">
+            <input type="hidden" name="id">
+            <div class="input_field" id="screening_movie_id_input_field">
+                <label>ID Film :</label>
+                <input type="number" name="movie_id" placeholder="1" required>
+            </div>
+
+            <div class="input_field" id="screening_room_id_input_field">
+                <label>ID Salle :</label>
+                <input type="number" name="room_id" placeholder="1" required>
+            </div>
+
+            <div class="input_field" id="screening_start_time_input_field">
+                <label>Heure de début :</label>
+                <input type="datetime-local" name="start_time" required>
+            </div>
+
+            <button type="submit">Enregistrer</button>
+            <button type="button" id="cancel_add_screening">Annuler</button>
+        </form>`;
+        if (!document.body.contains(instance.modalBase)) {
+                document.body.appendChild(instance.modalBase);
+            }
+            instance.modalBase.style.display = "flex";
+            document.getElementById("cancel_add_screening").addEventListener("click", ModalArchitect.closeAdd);
+            const form = document.getElementById("add_screening_form");
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                await Screening.addScreening(event.target);
             });
             instance.isOpen = true;
     }

@@ -1,5 +1,6 @@
 import { Movie } from "./class/movie.js";
 import { Room } from "./class/Room.js";
+import { Screening } from "./class/Screening.js";
 document.addEventListener("DOMContentLoaded", () => {
     // Default to movies on load
     Movie.init();
@@ -13,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById("screening_button").addEventListener("click", () => {
-        // TODO: Implement screening list
-        console.log("Screening button clicked");
+        Screening.init();
     });
 });
