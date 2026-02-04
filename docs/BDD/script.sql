@@ -1,4 +1,3 @@
-```sql
 CREATE TABLE rooms(
    id INT AUTO_INCREMENT,
    name VARCHAR(100) NOT NULL,
@@ -36,6 +35,16 @@ CREATE TABLE screenings(
    FOREIGN KEY(movie_id) REFERENCES movies(id)
 );
 
+CREATE TABLE users(
+   id INT AUTO_INCREMENT,
+   username VARCHAR(50) NOT NULL,
+   password VARCHAR(255) NOT NULL,
+   role VARCHAR(50) NOT NULL DEFAULT 'user',
+   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   PRIMARY KEY(id)
+);
+
 
 INSERT INTO rooms (name, capacity, type, active) VALUES 
 ('Salle IMAX 1', 250, 'IMAX', 1),
@@ -49,4 +58,7 @@ INSERT INTO movies (title, description, duration, release_year, genre, director)
 INSERT INTO screenings (movie_id, room_id, start_time) VALUES 
 (1, 1, '2026-02-01 20:30:00'),
 (2, 2, '2026-02-01 14:00:00');
-```
+
+INSERT INTO users (username, pass, role) VALUES 
+('admin', 'adminpassword', 'admin'),
+('user1', 'user1password', 'user');
