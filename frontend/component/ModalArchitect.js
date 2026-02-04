@@ -1,4 +1,5 @@
 import { Movie } from "../class/movie.js";
+import { Room } from "../class/Room.js";
 export class ModalArchitect {
     static instance = null;
     isOpen = false;
@@ -75,11 +76,56 @@ export class ModalArchitect {
         this.isOpen = false;
     }
 
-    static createMovie(){
+    modifyRoom(room){
+        if(typeof(room) === "object" && room instanceof Room) {
+            this.modalBase.innerHTML = "";
+            this.modalBase.innerHTML = `
+        <form class="room_form" id="modify_room_form">
+            <input type="hidden" name="id" value="${room.id}">
+            <div class="input_field" id="room_name_input_field">
+                <label>Nom :</label>
+                <input type="text" name="name" placeholder="Salle 1" value="${room.name}" required>
+            </div>
+
+            <div class="input_field" id="room_capacity_input_field">
+                <label>Capacité :</label>
+                <input type="number" name="capacity" placeholder="100" value="${room.capacity}" required>
+            </div>
+
+            <div class="input_field" id="room_type_input_field">
+                <label>Type :</label>
+                <input type="text" name="type" placeholder="Standard" value="${room.type}" required>
+            </div>
+
+            <div class="input_field" id="room_active_input_field">
+                <label>Active :</label>
+                <input type="checkbox" name="active" ${room.active ? 'checked' : ''}>
+            </div>
+
+            <button type="submit">Enregistrer</button>
+            <button type="button" id="cancel_modify_room">Annuler</button>
+        </form>`;
+            if (!document.body.contains(this.modalBase)) {
+                document.body.appendChild(this.modalBase);
+            }
+            this.modalBase.style.display = "flex";
+
+            document.getElementById("cancel_modify_room").addEventListener("click", ModalArchitect.closeModify);
+
+            const form = document.getElementById("modify_room_form");
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                await Room.updateRoom(event.target);
+            });
+            this.isOpen = true;
+        }
+    }
+
+    createMovie(){
         this.modalBase.innerHTML = "";
         this.modalBase.innerHTML = `
         <form class="movie_form" id="add_movie_form">
-            <input type="hidden" name="id"">
+            <input type="hidden" name="id">
             <div class="input_field" id="movie_title_input_field">
                 <label>Titre :</label>
                 <input type="text" name="title" placeholder="Inception" required>
@@ -117,7 +163,7 @@ export class ModalArchitect {
                 document.body.appendChild(this.modalBase);
             }
             this.modalBase.style.display = "flex";
-            document.getElementById("cancel_add_movie").addEventListener("click", ModalArchitect.closeModify);
+            document.getElementById("cancel_add_movie").addEventListener("click", ModalArchitect.closeAdd);
             const form = document.getElementById("add_movie_form");
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
@@ -131,5 +177,47 @@ export class ModalArchitect {
             modal.style.display = "none";
         }
         this.isOpen = false;
+    }
+
+    static createRoom(){
+        const instance = new ModalArchitect();
+        instance.modalBase.innerHTML = "";
+        instance.modalBase.innerHTML = `
+        <form class="room_form" id="add_room_form">
+            <input type="hidden" name="id">
+            <div class="input_field" id="room_name_input_field">
+                <label>Nom :</label>
+                <input type="text" name="name" placeholder="Salle 1" required>
+            </div>
+
+            <div class="input_field" id="room_capacity_input_field">
+                <label>Capacité :</label>
+                <input type="number" name="capacity" placeholder="100" required>
+            </div>
+
+            <div class="input_field" id="room_type_input_field">
+                <label>Type :</label>
+                <input type="text" name="type" placeholder="Standard" required>
+            </div>
+
+            <div class="input_field" id="room_active_input_field">
+                <label>Active :</label>
+                <input type="checkbox" name="active" checked>
+            </div>
+
+            <button type="submit">Enregistrer</button>
+            <button type="button" id="cancel_add_room">Annuler</button>
+        </form>`;
+        if (!document.body.contains(instance.modalBase)) {
+                document.body.appendChild(instance.modalBase);
+            }
+            instance.modalBase.style.display = "flex";
+            document.getElementById("cancel_add_room").addEventListener("click", ModalArchitect.closeAdd);
+            const form = document.getElementById("add_room_form");
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                await Room.addRoom(event.target);
+            });
+            instance.isOpen = true;
     }
 }

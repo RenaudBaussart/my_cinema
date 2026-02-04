@@ -59,6 +59,7 @@ case 'add_room':
     $room->name = $_POST['name'] ?? '';
     $room->capacity = (int)($_POST['capacity'] ?? 0);
     $room->type = $_POST['type'] ?? '';
+    $room->active = isset($_POST['active']) ? true : false;
     $roomController->addRoom(room: $room);
     break;
 case 'list_rooms':
@@ -71,6 +72,7 @@ case 'update_room':
         $roomUpdate->name = $_POST['name'] ?? '';
         $roomUpdate->capacity = (int)($_POST['capacity'] ?? 0);
         $roomUpdate->type = $_POST['type'] ?? '';
+        $roomUpdate->active = isset($_POST['active']) ? true : false;
         $roomUpdate->id = (int)$id;
         $roomController->updateRoom(room: $roomUpdate);
     }
