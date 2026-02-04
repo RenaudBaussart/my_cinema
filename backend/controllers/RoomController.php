@@ -19,7 +19,7 @@ Class RoomController{
     #endregion
     #region Read
     public function list(): void{
-        $rooms = $this->repository->getAll();
+        $rooms = $this->repository->getAllActive();
         $response = new Response(responseType: "success", responseMessage: $rooms);
         echo json_encode(value: $response);
     }
