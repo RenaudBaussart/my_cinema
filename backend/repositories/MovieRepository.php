@@ -67,14 +67,12 @@ class MovieRepository
     #endregion
     #region Delete
     public function remove(Movie $movie): bool {
-    $statement = $this->pdo->prepare("UPDATE movies SET is_deleted = 1 WHERE id = ?");
-    $statement->execute([$movie->id]);
-    return $statement->rowCount() > 0;
+        $statement = $this->pdo->prepare("UPDATE movies SET is_deleted = 1 WHERE id = ?");
+        return (bool) $statement->execute([$movie->id]);
     }
     public function restore(Movie $movie): bool {
     $statement = $this->pdo->prepare("UPDATE movies SET is_deleted = 0 WHERE id = ?");
-    $statement->execute([$movie->id]);
-    return $statement->rowCount() > 0;
+    return $statement->execute([$movie->id]);
     }   
     
     #endregion

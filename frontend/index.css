@@ -98,6 +98,29 @@ main.main_container{
     justify-content: center;
     align-items: center;
 }
+.modal_container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.movie_form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    gap: 15px;
+    width: 70vw;
+    height: 70vh;
+}
 /*#endregion*/
 /*#region utility class*/
 .inner_box_shadow{
