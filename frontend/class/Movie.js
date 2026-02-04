@@ -92,6 +92,14 @@ export class Movie{
         });
 
         const listContainerElement = document.getElementById("list_container");
+        const existingMovieButton = document.getElementById("add_movie_button");
+        if (existingMovieButton) {
+            existingMovieButton.remove();
+        }
+        const existingRoomButton = document.getElementById("add_room_button");
+        if (existingRoomButton) {
+            existingRoomButton.remove();
+        }
         let addButtonElement = document.createElement("button");
         addButtonElement.id = "add_movie_button";
         addButtonElement.textContent = "Ajouter un film";
