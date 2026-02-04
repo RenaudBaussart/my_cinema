@@ -122,20 +122,30 @@ export class ModalArchitect {
         }
     }
 
-    modifyScreening(screening){
+    async modifyScreening(screening){
         if(typeof(screening) === "object" && screening instanceof Screening) {
+            const movies = await Movie.getMoviesList();
+            const rooms = await Room.getRoomsList();
+
+            let movieOptions = movies.map(movie => `<option value="${movie.id}" ${movie.id == screening.movie_id ? 'selected' : ''}>${movie.title}</option>`).join('');
+            let roomOptions = rooms.map(room => `<option value="${room.id}" ${room.id == screening.room_id ? 'selected' : ''}>${room.name}</option>`).join('');
+
             this.modalBase.innerHTML = "";
             this.modalBase.innerHTML = `
         <form class="screening_form" id="modify_screening_form">
             <input type="hidden" name="id" value="${screening.id}">
             <div class="input_field" id="screening_movie_id_input_field">
-                <label>ID Film :</label>
-                <input type="number" name="movie_id" placeholder="1" value="${screening.movie_id}" required>
+                <label>Film :</label>
+                <select name="movie_id" required>
+                    ${movieOptions}
+                </select>
             </div>
 
             <div class="input_field" id="screening_room_id_input_field">
-                <label>ID Salle :</label>
-                <input type="number" name="room_id" placeholder="1" value="${screening.room_id}" required>
+                <label>Salle :</label>
+                <select name="room_id" required>
+                    ${roomOptions}
+                </select>
             </div>
 
             <div class="input_field" id="screening_start_time_input_field">
@@ -262,20 +272,30 @@ export class ModalArchitect {
             instance.isOpen = true;
     }
 
-    static createScreening(){
+    static async createScreening(){
+        const movies = await Movie.getMoviesList();
+        const rooms = await Room.getRoomsList();
+
+        let movieOptions = movies.map(movie => `<option value="${movie.id}">${movie.title}</option>`).join('');
+        let roomOptions = rooms.map(room => `<option value="${room.id}">${room.name}</option>`).join('');
+
         const instance = new ModalArchitect();
         instance.modalBase.innerHTML = "";
         instance.modalBase.innerHTML = `
         <form class="screening_form" id="add_screening_form">
             <input type="hidden" name="id">
             <div class="input_field" id="screening_movie_id_input_field">
-                <label>ID Film :</label>
-                <input type="number" name="movie_id" placeholder="1" required>
+                <label>Film :</label>
+                <select name="movie_id" required>
+                    ${movieOptions}
+                </select>
             </div>
 
             <div class="input_field" id="screening_room_id_input_field">
-                <label>ID Salle :</label>
-                <input type="number" name="room_id" placeholder="1" required>
+                <label>Salle :</label>
+                <select name="room_id" required>
+                    ${roomOptions}
+                </select>
             </div>
 
             <div class="input_field" id="screening_start_time_input_field">

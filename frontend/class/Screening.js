@@ -63,10 +63,10 @@ export class Screening{
             let editButton = document.getElementById(`edit_${screening.id}`);
             let delButton = document.getElementById(`del_${screening.id}`);
 
-            editButton.addEventListener("click", () => {
+            editButton.addEventListener("click", async () => {
                 console.log("Edit screening with ID:", screening.id);
                 const modal = new ModalArchitect();
-                modal.modifyScreening(screening);
+                await modal.modifyScreening(screening);
             });
 
             delButton.addEventListener("click", async () => {
@@ -95,9 +95,8 @@ export class Screening{
         let addButtonElement = document.createElement("button");
         addButtonElement.id = "add_projection_button";
         addButtonElement.textContent = "Ajouter une projection";
-        addButtonElement.addEventListener("click", () => {
-            const modal = new ModalArchitect();
-            modal.createScreening();
+        addButtonElement.addEventListener("click", async () => {
+            await ModalArchitect.createScreening();
         })
         listContainerElement.appendChild(addButtonElement);
     }
