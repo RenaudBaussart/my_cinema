@@ -19,7 +19,7 @@ Class RoomController{
     #endregion
     #region Read
     public function list(): void{
-        $rooms = $this->repository->getAllActive();
+        $rooms = $this->repository->getAll();
         $response = new Response(responseType: "success", responseMessage: $rooms);
         echo json_encode(value: $response);
     }
@@ -41,7 +41,7 @@ Class RoomController{
     #endregion
     #region Delete
     public function deleteRoom(Room $room): void{
-        $repoReturn = $this->repository->remove(room: $room);
+        $repoReturn = $this->repository->deactivate(room: $room);
         $response = "";
         if($repoReturn === true){
             $response = new Response(responseType: "success", responseMessage: "Salle supprimée !");

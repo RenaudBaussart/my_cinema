@@ -5,6 +5,7 @@ class Screening{
     public $movie_id;
     public $room_id;
     public $start_time;
+    public $end_time;
     public $created_at;
 }
     
