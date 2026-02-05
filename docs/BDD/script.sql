@@ -27,6 +27,7 @@ CREATE TABLE screenings(
    id INT AUTO_INCREMENT,
    is_deleted TINYINT(1) NOT NULL DEFAULT 0,
    start_time DATETIME NOT NULL,
+   end_time DATETIME NOT NULL,
    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
    room_id INT NOT NULL,
    movie_id INT NOT NULL,
@@ -55,9 +56,9 @@ INSERT INTO movies (title, description, duration, release_year, genre, director)
 ('Inception', 'Un voleur spécialisé dans l extraction...', 148, 2010, 'Sci-Fi', 'Christopher Nolan'),
 ('Avatar 2', 'L histoire de la famille Sully...', 192, 2022, 'Aventure', 'James Cameron');
 
-INSERT INTO screenings (movie_id, room_id, start_time) VALUES 
-(1, 1, '2026-02-01 20:30:00'),
-(2, 2, '2026-02-01 14:00:00');
+INSERT INTO screenings (movie_id, room_id, start_time,end_time) VALUES 
+(1, 1, '2026-02-01 20:30:00', '2026-02-01 22:58:00'),
+(2, 2, '2026-02-01 14:00:00', '2026-02-01 17:12:00');
 
 INSERT INTO users (username, pass, role) VALUES 
 ('admin', 'adminpassword', 'admin'),
