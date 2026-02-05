@@ -96,7 +96,8 @@ export class Screening{
         addButtonElement.id = "add_projection_button";
         addButtonElement.textContent = "Ajouter une projection";
         addButtonElement.addEventListener("click", async () => {
-            await ModalArchitect.createScreening();
+            const modal = new ModalArchitect();
+            await modal.createScreening();
         })
         listContainerElement.appendChild(addButtonElement);
     }

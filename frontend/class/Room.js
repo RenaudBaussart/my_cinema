@@ -98,6 +98,7 @@ export class Room{
         addButtonElement.textContent = "Ajouter une salle";
         addButtonElement.addEventListener("click", () => {
             const modal = new ModalArchitect();
+            console.log("i'am working")
             modal.createRoom();
         })
         listContainerElement.appendChild(addButtonElement);

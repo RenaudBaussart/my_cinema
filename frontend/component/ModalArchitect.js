@@ -13,6 +13,12 @@ export class ModalArchitect {
         ModalArchitect.instance = this;
         this.modalBase = document.createElement("div");
         this.modalBase.className = "modal_container";
+        // Add event delegation for cancel buttons
+        this.modalBase.addEventListener("click", (e) => {
+            if (e.target.classList.contains("modal_cancel_button")) {
+                ModalArchitect.closeModify();
+            }
+        });
     }
 
     modifyMovie(movie){
@@ -52,14 +58,12 @@ export class ModalArchitect {
             </div>
 
             <button type="submit">Enregistrer</button>
-            <button type="button" id="cancel_modify_movie">Annuler</button>
+            <button type="button" class="modal_cancel_button">Annuler</button>
         </form>`;
             if (!document.body.contains(this.modalBase)) {
                 document.body.appendChild(this.modalBase);
             }
             this.modalBase.style.display = "flex";
-
-            document.getElementById("cancel_modify_movie").addEventListener("click", ModalArchitect.closeModify);
 
             const form = document.getElementById("modify_movie_form");
             form.addEventListener('submit', async (event) => {
@@ -69,12 +73,12 @@ export class ModalArchitect {
             this.isOpen = true;
         }
     }
-    static closeModify(){
-        let modal = document.querySelector(".modal_container");
-        if(modal){
-            modal.style.display = "none";
+    closeModify(){
+        if (!ModalArchitect.instance) {
+            new ModalArchitect();
         }
-        this.isOpen = false;
+        ModalArchitect.instance.isOpen = false;
+        ModalArchitect.instance.modalBase.style.display = "none";
     }
 
     modifyRoom(room){
@@ -104,14 +108,12 @@ export class ModalArchitect {
             </div>
 
             <button type="submit">Enregistrer</button>
-            <button type="button" id="cancel_modify_room">Annuler</button>
+            <button type="button" class="modal_cancel_button">Annuler</button>
         </form>`;
             if (!document.body.contains(this.modalBase)) {
                 document.body.appendChild(this.modalBase);
             }
             this.modalBase.style.display = "flex";
-
-            document.getElementById("cancel_modify_room").addEventListener("click", ModalArchitect.closeModify);
 
             const form = document.getElementById("modify_room_form");
             form.addEventListener('submit', async (event) => {
@@ -154,14 +156,12 @@ export class ModalArchitect {
             </div>
 
             <button type="submit">Enregistrer</button>
-            <button type="button" id="cancel_modify_screening">Annuler</button>
+            <button type="button" class="modal_cancel_button">Annuler</button>
         </form>`;
             if (!document.body.contains(this.modalBase)) {
                 document.body.appendChild(this.modalBase);
             }
             this.modalBase.style.display = "flex";
-
-            document.getElementById("cancel_modify_screening").addEventListener("click", ModalArchitect.closeModify);
 
             const form = document.getElementById("modify_screening_form");
             form.addEventListener('submit', async (event) => {
@@ -208,13 +208,12 @@ export class ModalArchitect {
             </div>
 
             <button type="submit">Enregistrer</button>
-            <button type="button" id="cancel_add_movie">Annuler</button>
+            <button type="button" class="modal_cancel_button">Annuler</button>
         </form>`;
         if (!document.body.contains(this.modalBase)) {
                 document.body.appendChild(this.modalBase);
             }
             this.modalBase.style.display = "flex";
-            document.getElementById("cancel_add_movie").addEventListener("click", ModalArchitect.closeAdd);
             const form = document.getElementById("add_movie_form");
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
@@ -223,14 +222,22 @@ export class ModalArchitect {
             this.isOpen = true;
     }
     static closeAdd(){
-        let modal = document.querySelector(".modal_container");
-        if(modal){
-            modal.style.display = "none";
+        if (!ModalArchitect.instance) {
+            new ModalArchitect();
         }
-        this.isOpen = false;
+        ModalArchitect.instance.isOpen = false;
+        ModalArchitect.instance.modalBase.style.display = "none";
     }
 
-    static createRoom(){
+    static closeModify(){
+        if (!ModalArchitect.instance) {
+            new ModalArchitect();
+        }
+        ModalArchitect.instance.isOpen = false;
+        ModalArchitect.instance.modalBase.style.display = "none";
+    }
+
+    createRoom(){
         const instance = new ModalArchitect();
         instance.modalBase.innerHTML = "";
         instance.modalBase.innerHTML = `
@@ -257,13 +264,12 @@ export class ModalArchitect {
             </div>
 
             <button type="submit">Enregistrer</button>
-            <button type="button" id="cancel_add_room">Annuler</button>
+            <button type="button" class="modal_cancel_button">Annuler</button>
         </form>`;
         if (!document.body.contains(instance.modalBase)) {
                 document.body.appendChild(instance.modalBase);
             }
             instance.modalBase.style.display = "flex";
-            document.getElementById("cancel_add_room").addEventListener("click", ModalArchitect.closeAdd);
             const form = document.getElementById("add_room_form");
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
@@ -272,7 +278,7 @@ export class ModalArchitect {
             instance.isOpen = true;
     }
 
-    static async createScreening(){
+    async createScreening(){
         const movies = await Movie.getMoviesList();
         const rooms = await Room.getRoomsList();
 
@@ -304,13 +310,12 @@ export class ModalArchitect {
             </div>
 
             <button type="submit">Enregistrer</button>
-            <button type="button" id="cancel_add_screening">Annuler</button>
+            <button type="button" class="modal_cancel_button">Annuler</button>
         </form>`;
         if (!document.body.contains(instance.modalBase)) {
                 document.body.appendChild(instance.modalBase);
             }
             instance.modalBase.style.display = "flex";
-            document.getElementById("cancel_add_screening").addEventListener("click", ModalArchitect.closeAdd);
             const form = document.getElementById("add_screening_form");
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
