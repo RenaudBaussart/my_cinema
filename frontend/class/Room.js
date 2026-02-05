@@ -89,6 +89,10 @@ export class Room{
         if (existingRoomButton) {
             existingRoomButton.remove();
         }
+        const existingProjectionButton = document.getElementById("add_projection_button");
+        if (existingProjectionButton) {
+            existingProjectionButton.remove();
+        }
         let addButtonElement = document.createElement("button");
         addButtonElement.id = "add_room_button";
         addButtonElement.textContent = "Ajouter une salle";
