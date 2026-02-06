@@ -166,7 +166,12 @@ export class ModalArchitect {
             const form = document.getElementById("modify_screening_form");
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
-                await Screening.updateScreening(event.target);
+                try {
+                    await Screening.updateScreening(event.target);
+                } catch (err) {
+                    console.error(err);
+                    alert(err.message || 'Erreur lors de la modification de la projection.');
+                }
             });
             this.isOpen = true;
         }
@@ -319,7 +324,12 @@ export class ModalArchitect {
             const form = document.getElementById("add_screening_form");
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
-                await Screening.addScreening(event.target);
+                try {
+                    await Screening.addScreening(event.target);
+                } catch (err) {
+                    console.error(err);
+                    alert(err.message || 'Erreur lors de l\'ajout de la projection.');
+                }
             });
             instance.isOpen = true;
     }

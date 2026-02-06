@@ -56,15 +56,18 @@ class RoomRepository {
     }
     #endregion
     #region Delete
-    public function remove(Room $room): bool {
-        $statement = $this->pdo->prepare(query: "UPDATE rooms SET is_deleted = 1 WHERE id = ?");
-        $statement->execute(params: [$room->id]);
-        return $statement->rowCount() > 0;
+    public function deactivate(Room $room): bool {
+        $statement = $this->pdo->prepare(query: "UPDATE rooms SET active = 0 WHERE id = ?");
+        return $statement->execute(params: [$room->id]);
+        
     }
-    public function restore(Room $room): bool {
-        $statement = $this->pdo->prepare(query: "UPDATE rooms SET is_deleted = 0 WHERE id = ?");
-        $statement->execute(params: [$room->id]);
-        return $statement->rowCount() > 0;
+    public function activate(Room $room): bool {
+        $statement = $this->pdo->prepare(query: "UPDATE rooms SET active = 1 WHERE id = ?");
+        return $statement->execute(params: [$room->id]);
+    }
+    public function delete(Room $room): bool {
+        $statement = $this->pdo->prepare(query: "DELETE FROM rooms WHERE id = ?");
+        return $statement->execute(params: [$room->id]);
     }
     #endregion
 }

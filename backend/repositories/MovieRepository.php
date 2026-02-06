@@ -32,17 +32,17 @@ class MovieRepository
     public function getAll(): array
     {
         $statement = $this->pdo->query(query: "SELECT * FROM movies");
-        return $statement->fetchAll(mode: PDO::FETCH_CLASS, column: "Movie");
+        return $statement->fetchAll( PDO::FETCH_CLASS,  "Movie");
     }
     public function getAllUndeleted(): array
     {
         $statement = $this->pdo->query(query: "SELECT * FROM movies WHERE is_deleted = 0");
-        return $statement->fetchAll(mode: PDO::FETCH_CLASS, column: "Movie");
+        return $statement->fetchAll( PDO::FETCH_CLASS, "Movie");
     }
     public function getAllDeleted(): array
     {
         $statement = $this->pdo->query(query: "SELECT * FROM movies WHERE is_deleted = 1");
-        return $statement->fetchAll(mode: PDO::FETCH_CLASS, column: "Movie");
+        return $statement->fetchAll( PDO::FETCH_CLASS,  "Movie");
     }
     public function getById(int $id): ?Movie {
         $statement = $this->pdo->prepare("SELECT * FROM movies WHERE id = ?");
